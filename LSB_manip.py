@@ -91,6 +91,10 @@ class steg:
                     
         return binary
 
-img = steg('./kat03.png')
-img.encode("hello there", "./output.png")
-print(img.decode())
+def main():
+    img = steg('./kat03.png')
+    img.encode("hello there", "./output.png")
+    print(img.decode())
+
+if __name__ == "__main__":
+    main()
