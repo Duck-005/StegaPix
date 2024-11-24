@@ -5,13 +5,16 @@ class steg:
         self.img = Image.open(image_path)
         self.pixels = self.img.load()
         
-    def encode(self, secret, output_path):
-        secret_bin = ''.join(format(ord(c), '08b') for c in secret)
+    def encode(self, secret_file, output_path):
+        with open(secret_file, 'r') as file:
+            text = file.read()
+        
+        secret_bin = ''.join(format(ord(c), '08b') for c in text)
     
         secret_len = len(secret_bin)
-        secret_len_bin = format(secret_len, '08b')
+        secret_len_bin = format(secret_len, '024b')
         
-        if self.img.height * self.img.width * 3 < secret_len + 8:
+        if self.img.height * self.img.width * 3 < secret_len + 24:
             print("Image too small to hide the message")
         
         self.encode_sub(secret_len_bin, isMessage=False)
@@ -23,7 +26,7 @@ class steg:
     def encode_sub(self, binary, isMessage):        
         length = len(binary)
         msg_index = 0
-        startPt = 8 if isMessage else 0
+        startPt = 24 if isMessage else 0
         
         for x in range(self.img.height):
             for y in range(self.img.width):
@@ -51,7 +54,7 @@ class steg:
                 self.pixels[x, y] = (r, g, b)
     
     def decode(self):
-        message_len_bin = self.decode_sub(8, isMessage=False)
+        message_len_bin = self.decode_sub(24, isMessage=False)
         message_len = int(message_len_bin, 2)
         
         secret_bin = self.decode_sub(message_len, isMessage=True)
@@ -59,12 +62,13 @@ class steg:
             chr(int(secret_bin[i:i+8], 2)) for i in range(0, len(secret_bin), 8)
         )
         
-        return secret
+        with open('./secret.txt', 'w') as file:
+            file.write(secret)
      
     def decode_sub(self, length, isMessage):
         binary = ""
         msg_index = 0
-        startPt = 8 if isMessage else 0
+        startPt = 24 if isMessage else 0
         
         for x in range(self.img.height):
             if msg_index >= length:
@@ -93,8 +97,8 @@ class steg:
 
 def main():
     img = steg('./kat03.png')
-    img.encode("hello there", "./output.png")
-    print(img.decode())
+    img.encode("./script.txt", "./output.png")
+    img.decode()
 
 if __name__ == "__main__":
     main()

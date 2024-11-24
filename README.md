@@ -40,6 +40,8 @@ Original Image   |  Modified Image
 
 As we can see no visible change is seen by the naked eye since the shades may differ by one bit. Which is too small to notice.
 
+The entirety of the bee movie script has been encoded in this image and we are oblivious to it.
+
 ### IMPORTANT
 
 > Use a lossless saving format like png, bmp, gif to ensure that the message is not corrupted by the lossy compression. <br>
