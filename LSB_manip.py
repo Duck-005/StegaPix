@@ -97,7 +97,7 @@ class steg:
 
 def main():
     img = steg('./kat03.png')
-    img.encode("./script.txt", "./output.png")
+    img.encode("./bee_movie_script.txt", "./output.png")
     img.decode()
 
 if __name__ == "__main__":
