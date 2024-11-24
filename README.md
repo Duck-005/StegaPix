@@ -29,8 +29,8 @@ New pixel value becomes `(1110100"0", 0001010"1", 0101100"1")`
 This is repeated until all the bits are encoded.
 
 ```
-Also this particular method also encodes the length of the message in the same way in the first 8 LSBs.
-Thus a message of size 32 bytes (2^8 / 8) can be hidden inside.
+Also this particular method also encodes the length of the message in the same way in the first 24 LSBs.
+Thus a message of size 2 MB (2^24 / 8) can be hidden inside.
 ```
 In  the same way any file can be hidden provided the base image is big enough. 
 
